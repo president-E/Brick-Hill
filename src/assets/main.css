@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-neutral-900 text-white font-sans antialiased;
+  }
+
+  * {
+    @apply border-neutral-700;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-900;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500;
+  }
+
+  .btn-secondary {
+    @apply btn bg-secondary-500 text-white hover:bg-secondary-600 focus:ring-secondary-500;
+  }
+
+  .btn-success {
+    @apply btn bg-success-500 text-white hover:bg-success-600 focus:ring-success-500;
+  }
+
+  .btn-warning {
+    @apply btn bg-warning-500 text-neutral-900 hover:bg-warning-600 focus:ring-warning-500;
+  }
+
+  .btn-error {
+    @apply btn bg-error-500 text-white hover:bg-error-600 focus:ring-error-500;
+  }
+
+  .btn-ghost {
+    @apply btn bg-transparent hover:bg-neutral-800 text-neutral-300;
+  }
+
+  .btn-outline {
+    @apply btn bg-transparent border-2 border-current hover:bg-neutral-800;
+  }
+
+  .input {
+    @apply w-full px-4 py-2 bg-neutral-800 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
+  }
+
+  .card {
+    @apply bg-neutral-800 rounded-xl border border-neutral-700 overflow-hidden;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply badge bg-primary-500/20 text-primary-300;
+  }
+
+  .badge-secondary {
+    @apply badge bg-secondary-500/20 text-secondary-300;
+  }
+
+  .badge-success {
+    @apply badge bg-success-500/20 text-success-300;
+  }
+
+  .badge-warning {
+    @apply badge bg-warning-500/20 text-warning-300;
+  }
+
+  .badge-error {
+    @apply badge bg-error-500/20 text-error-300;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
