@@ -15,7 +15,7 @@ const friends = ref<Friend[]>([])
 const loading = ref(true)
 const activeTab = ref('about')
 
-const userId = computed(() => parseInt(route.params.id as string))
+const userId = computed(() => route.params.id as string)
 const isOwnProfile = computed(() => authStore.profile?.id === userId.value)
 
 const isOnline = computed(() => {
@@ -58,7 +58,7 @@ onMounted(async () => {
         .limit(10),
       supabase
         .from('friends')
-        .select('*, from_user:users!friends_from_id_fkey(id, username), to_user:users!friends_to_id_fkey(id, username)')
+        .select('*, from_user:users!friends_from_id_fkey(*), to_user:users!friends_to_id_fkey(*)')
         .or(`from_id.eq.${userId.value},to_id.eq.${userId.value}`)
         .eq('is_pending', false)
         .limit(20),
@@ -118,7 +118,7 @@ onMounted(async () => {
             </div>
             <div v-if="!isOwnProfile && authStore.isAuthenticated" class="flex gap-2">
               <button @click="sendFriendRequest" class="btn-primary">Add Friend</button>
-              <RouterLink to="`/trades?user=${user.id}`" class="btn-ghost">Trade</RouterLink>
+              <RouterLink :to="`/trades?user=${user.id}`" class="btn-ghost">Trade</RouterLink>
             </div>
             <div v-if="isOwnProfile" class="flex gap-2">
               <RouterLink to="/avatar" class="btn-ghost">Edit Avatar</RouterLink>

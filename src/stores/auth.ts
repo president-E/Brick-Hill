@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabase'
 import type { User, Session } from '@supabase/supabase-js'
 
 interface Profile {
-  id: number
+  id: string
   username: string
   description: string | null
   avatar_items: Record<string, unknown>
@@ -65,51 +65,8 @@ export const useAuthStore = defineStore('auth', () => {
       .single()
 
     if (error) {
-      if (error.code === 'PGRST116') {
-        // Profile doesn't exist, create it
-        await createProfile()
-      } else {
-        console.error('Error fetching profile:', error)
-      }
+      console.error('Error fetching profile:', error)
     } else {
-      profile.value = data as Profile
-    }
-  }
-
-  async function createProfile() {
-    if (!user.value) return
-
-    const username = user.value.email?.split('@')[0] || `user_${Date.now()}`
-
-    const { data, error } = await supabase
-      .from('users')
-      .insert({
-        id: parseInt(user.value.id),
-        username,
-        avatar_items: {
-          hats: [],
-          face: 0,
-          head: 0,
-          tool: 0,
-          face_asset: null,
-          head_asset: null,
-        },
-        avatar_colors: {
-          head: 'F3B700',
-          torso: 'B1B1B1',
-          left_arm: 'F3B700',
-          right_arm: 'F3B700',
-          left_leg: 'E9EAEE',
-          right_leg: 'E9EAEE',
-        },
-        bucks: 10,
-        bits: 0,
-        power: 0,
-      })
-      .select()
-      .single()
-
-    if (!error && data) {
       profile.value = data as Profile
     }
   }
@@ -120,40 +77,14 @@ export const useAuthStore = defineStore('auth', () => {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          data: {
+            username: username
+          }
+        }
       })
 
       if (error) throw error
-
-      if (data.user) {
-        // Create the profile manually since the trigger might not exist
-        const { error: profileError } = await supabase
-          .from('users')
-          .insert({
-            id: parseInt(data.user.id),
-            username,
-            avatar_items: {
-              hats: [],
-              face: 0,
-              head: 0,
-              tool: 0,
-            },
-            avatar_colors: {
-              head: 'F3B700',
-              torso: 'B1B1B1',
-              left_arm: 'F3B700',
-              right_arm: 'F3B700',
-              left_leg: 'E9EAEE',
-              right_leg: 'E9EAEE',
-            },
-            bucks: 10,
-            bits: 0,
-            power: 0,
-          })
-
-        if (profileError) {
-          console.error('Error creating profile:', profileError)
-        }
-      }
 
       return { success: true, data }
     } catch (error) {

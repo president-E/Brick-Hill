@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
-import { supabase } from '@/lib/supabase'
 import type { Item } from '@/types'
 
 const authStore = useAuthStore()
@@ -40,20 +39,7 @@ onMounted(async () => {
   avatarColors.value = { ...authStore.profile.avatar_colors as typeof avatarColors.value }
   avatarItems.value = { ...authStore.profile.avatar_items as typeof avatarItems.value }
 
-  try {
-    const { data, error } = await supabase
-      .from('crates')
-      .select('*, item:items(*, type:item_types(*))')
-      .eq('user_id', authStore.profile.id)
-
-    if (!error && data) {
-      inventory.value = data.map(c => c.item).filter(Boolean) as Item[]
-    }
-  } catch (error) {
-    console.error('Error loading inventory:', error)
-  } finally {
-    loading.value = false
-  }
+  loading.value = false
 })
 
 async function saveAvatar() {

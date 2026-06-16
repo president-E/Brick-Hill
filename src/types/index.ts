@@ -1,5 +1,5 @@
 export interface User {
-  id: number
+  id: string
   username: string
   description: string | null
   avatar_items: AvatarItems
@@ -33,7 +33,7 @@ export interface AvatarColors {
 
 export interface Item {
   id: number
-  creator_id: number
+  creator_id: string
   name: string
   description: string | null
   type_id: number
@@ -61,7 +61,7 @@ export interface ItemType {
 
 export interface Set {
   id: number
-  creator_id: number
+  creator_id: string
   name: string
   description: string | null
   visits: number
@@ -76,8 +76,8 @@ export interface Set {
 
 export interface Friend {
   id: number
-  from_id: number
-  to_id: number
+  from_id: string
+  to_id: string
   is_pending: boolean
   created_at: string
   from_user?: User
@@ -86,7 +86,7 @@ export interface Friend {
 
 export interface Crate {
   id: number
-  user_id: number
+  user_id: string
   item_id: number
   acquired_at: string
   item?: Item
@@ -94,8 +94,8 @@ export interface Crate {
 
 export interface Trade {
   id: number
-  sender_id: number
-  receiver_id: number
+  sender_id: string
+  receiver_id: string
   status: 'pending' | 'accepted' | 'declined' | 'cancelled'
   sender_items: number[]
   receiver_items: number[]
@@ -109,8 +109,8 @@ export interface Trade {
 
 export interface Message {
   id: number
-  author_id: number
-  recipient_id: number
+  author_id: string
+  recipient_id: string
   subject: string
   content: string
   is_read: boolean
@@ -120,7 +120,7 @@ export interface Message {
 
 export interface ForumThread {
   id: number
-  author_id: number
+  author_id: string
   title: string
   category_id: number
   is_locked: boolean
@@ -134,7 +134,7 @@ export interface ForumThread {
 export interface ForumPost {
   id: number
   thread_id: number
-  author_id: number
+  author_id: string
   content: string
   created_at: string
   updated_at: string

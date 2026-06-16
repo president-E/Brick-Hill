@@ -80,7 +80,7 @@ const sentMessages = () => messages.value.filter(m => m.author_id === authStore.
             <h3 class="text-white font-medium truncate">{{ message.subject }}</h3>
             <span v-if="!message.is_read" class="w-2 h-2 bg-primary-500 rounded-full"></span>
           </div>
-          <p class="text-neutral-400 text-sm">{{ activeTab === 'inbox' ? `From ${message.author?.username}` : `To User #${message.recipient_id}` }}</p>
+          <p class="text-neutral-400 text-sm">{{ activeTab === 'inbox' ? `From ${message.author?.username}` : `To User #${message.recipient_id.substring(0, 8)}` }}</p>
         </div>
         <span class="text-neutral-500 text-sm">{{ new Date(message.created_at).toLocaleDateString() }}</span>
       </div>
