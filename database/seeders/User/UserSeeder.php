@@ -67,7 +67,7 @@ class UserSeeder extends Seeder
                     ->count(5)
             )
             ->create([
-                'username' => 'Test Name'
+                'username' => 'admin'
             ])
             ->assignRole('super-admin');
 
