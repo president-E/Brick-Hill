@@ -71,7 +71,7 @@ class UserFactory extends Factory
     {
         return $this->state(function () {
             return [
-                'power' => 10,
+                'power' => 100,
             ];
         })->tfa()->hasTfaRecoveryCodes();
     }
